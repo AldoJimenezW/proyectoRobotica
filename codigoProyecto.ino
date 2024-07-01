@@ -1,30 +1,17 @@
-# Proyecto de Robótica
-Integrantes:
-- Aldo Jiménez
-- Jorge Figueroa
-
-## Explicación del código
-### Definición de variables 
-
-En esta parte del código estamos definiendo variables las cuales van a ser usadas más adelante, principalmente son los pines a los cuales conectamos motores y sensores.
-
-```cpp
+#include <QTRSensors.h>
+#define MOTOR1_ENABLE 3
+#define MOTOR1_IN1 2
 #define MOTOR1_IN2 5
 #define MOTOR2_ENABLE 10
 #define MOTOR2_IN1 8
 #define MOTOR2_IN2 9
 
+
 QTRSensors qtr;
 bool isComment = 0;
 const uint8_t SensorCount = 6;
 uint16_t sensorValues[SensorCount];
-```
 
-### Funciones 
-
-En la siguiente sección del código tenemos la creación de las funciones que nos permitirán movernos en todas las direcciones.
-
-```cpp
 void turnright(int x, int y){
    digitalWrite(MOTOR1_IN1, HIGH);
     digitalWrite(MOTOR1_IN2, LOW);
@@ -57,13 +44,8 @@ void stops(){
     analogWrite(MOTOR1_ENABLE, 0);
     analogWrite(MOTOR2_ENABLE, 0);
 }
-```
 
-### Void Setup
 
-Dentro de void setup, el cual es la parte del código que se corre primero al encender el Arduino, tenemos en primer lugar la definición de los pines y cómo estos se van a comportar. Además de configurar los sensores que se encuentran en la parte de abajo de nuestro robot, luego de medio milisegundo empieza la calibración del robot donde este empieza a dar vueltas en círculos analizando los sensores y así calibrándose para distinguir el negro del blanco. Al finalizar esto toma una pausa de un segundo.
-
-```cpp
 void setup() {
    // configure the sensors
   pinMode(MOTOR1_ENABLE, OUTPUT);
@@ -109,13 +91,7 @@ void setup() {
   delay(1000);// put your setup code here, to run once:
 
 }
-```
 
-### Void Loop 
-
-Finalmente, el void loop, el cual se repite constantemente para el funcionamiento de nuestro robot. Este código lo que hace, es en un comienzo guardar en tres variables los valores de nuestros 6 sensores, siendo estos el promedio de 2 sensores juntos. Luego iniciamos 4 variables las cuales van a ser 3 en caso de que el sensor detecte que hay negro y el otro va a ser el nivel de sensibilidad de la detección del color, es decir, el umbral de sensibilidad. Luego hacemos la detección del color y modificamos las variables de detección de color en caso de detectarse un cambio. A continuación tenemos una serie de ifs los cuales nos darán la estrategia a seguir, la cual será explicada con imágenes.
-
-```cpp 
 void loop() {
     // read calibrated sensor values and obtain a measure of the line position
   // from 0 to 5000 (for a white line, use readLineWhite() instead)
@@ -215,26 +191,3 @@ else {
 
   }
 }
-```
-En primer lugar, indicamos en caso de ser negro el centro o no, ahí separamos en 2 situaciones. En caso de ser positivo se toma el primer caso que sería centro negro y resto blanco, aquí se toma la estrategia de ir adelante. En caso de ser negro al centro y a la derecha, y blanco a la izquierda, tomará la decisión de ir a la izquierda. Si es caso contrario, es decir, negro a la izquierda y blanco a la derecha, tomará la elección de ir a la derecha. Por último, en caso de ser todo negro, girará a la izquierda en círculos hasta encontrar un camino y al ser todo blanco se quedará quieto.
-
-####  Hacia adelante 
- 
-Las flechas indican la direccion de las ruedas.
-
-![hacia adelante](/img/hacia%20adelante.png)
-
-
-####  Hacia la izquierda
- 
-
-![hacia la izquierda](/img/hacia%20adelante.png)
-
-####  Hacia la derecha 
- 
-
-![hacia la derecha](/img/a%20la%20derecha.png)
-####  Quieto 
- 
-
-![quieto](/img/stop.png)
