@@ -228,7 +228,7 @@ Las flechas indican la direccion de las ruedas.
 ####  Hacia la izquierda
  
 
-![hacia la izquierda](/img/hacia%20adelante.png)
+![hacia la izquierda](/img/a%20la%20izquierda.png)
 
 ####  Hacia la derecha 
  
